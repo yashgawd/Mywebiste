@@ -1,0 +1,595 @@
+/* === Base & Theme Variables (Consistent with Template) === */
+:root {
+    --primary-color: #818cf8; /* Indigo-400 */
+    --primary-dark: #6366f1;  /* Indigo-500 */
+    --secondary-color: #10b981; /* Emerald-500 */
+    --secondary-dark: #059669; /* Emerald-600 */
+    --accent-color: #f59e0b;  /* Amber-500 */
+    --text-color: #f8fafc;    /* Slate-50 */
+    --text-light: #94a3b8;   /* Slate-400 */
+    --text-heading: #ffffff;  /* Brighter for headings */
+    --bg-color: #0f172a;      /* Slate-900 */
+    --bg-secondary: #1e293b;  /* Slate-800 */
+    --card-bg: #1e293b;      /* Slate-800 */
+    --border-color: #334155;  /* Slate-700 */
+    --code-bg: #293548;       /* Slightly different code background */
+    --code-text: #e2e8f0;     /* Slate-200 for code */
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --footer-bg: #020617;      /* Slate-950 */
+    --footer-text: #f1f5f9;    /* Slate-100 */
+    --link-color: var(--primary-color);
+    --link-hover-color: var(--primary-dark);
+    --blockquote-border: var(--primary-color);
+    --transition: all 0.3s ease-in-out;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-serif: 'Lora', Georgia, serif; /* Example serif for body */
+    --font-mono: 'Fira Code', 'Courier New', monospace;
+}
+
+[data-theme="light"] {
+    --primary-color: #6366f1;  /* Indigo-500 */
+    --primary-dark: #4f46e5;   /* Indigo-600 */
+    --secondary-color: #10b981; /* Emerald-500 */
+    --secondary-dark: #059669; /* Emerald-600 */
+    --accent-color: #f59e0b;  /* Amber-500 */
+    --text-color: #334155;    /* Slate-700 */
+    --text-light: #64748b;   /* Slate-500 */
+    --text-heading: #1e293b;  /* Slate-800 */
+    --bg-color: #ffffff;
+    --bg-secondary: #f8fafc;  /* Slate-50 */
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;  /* Slate-200 */
+    --code-bg: #f1f5f9;       /* Slate-100 for code */
+    --code-text: #475569;     /* Slate-600 for code */
+    --shadow-color: rgba(99, 102, 241, 0.1);
+    --footer-bg: #1e293b;      /* Slate-800 */
+    --footer-text: #f8fafc;    /* Slate-50 */
+    --link-color: var(--primary-dark);
+    --link-hover-color: #3730a3; /* Indigo-700 */
+    --blockquote-border: var(--primary-color);
+}
+
+/* === Global Resets & Base Styles (From Template) === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; /* Adjusted based on sticky nav height */ }
+body {
+    font-family: var(--font-sans); /* Use Sans for base */
+    line-height: 1.7; /* Increased slightly for readability */
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+img, figure { max-width: 100%; height: auto; display: block; border-radius: 0.5rem; /* Default radius */ }
+a { color: var(--link-color); text-decoration: none; transition: var(--transition); }
+a:hover { color: var(--link-hover-color); text-decoration: underline; }
+h1, h2, h3, h4, h5, h6 { color: var(--text-heading); line-height: 1.3; margin-bottom: 1rem; font-weight: 700; font-family: var(--font-sans); /* Ensure headings use Sans */ }
+/* Base heading sizes defined later in .blog-post-content */
+p { margin-bottom: 1.25rem; }
+ul, ol { margin-bottom: 1.25rem; padding-left: 1.5rem; } /* Base list padding */
+li { margin-bottom: 0.5rem; }
+
+/* Base Blockquote (From Template - will be slightly overridden by specific blog styles) */
+blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--blockquote-border);
+    background-color: var(--bg-secondary);
+    color: var(--text-light);
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+}
+blockquote p { margin-bottom: 0.5rem; }
+blockquote footer { font-style: normal; font-size: 0.9em; color: var(--text-light); text-align: right; }
+
+
+/* === Reusable Components (From Template) === */
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: var(--transition); border: none; cursor: pointer; gap: 0.5rem; font-size: 0.9375rem; text-align: center; line-height: 1.2; }
+.btn i { font-size: 1em; }
+.btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.btn-primary { background-color: var(--primary-color); color: white; box-shadow: 0 2px 4px var(--shadow-color); }
+.btn-primary:hover:not(:disabled) { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 12px var(--shadow-color); }
+.btn-secondary { background-color: var(--secondary-color); color: white; box-shadow: 0 2px 4px var(--shadow-color); }
+.btn-secondary:hover:not(:disabled) { background-color: var(--secondary-dark); transform: translateY(-2px); box-shadow: 0 6px 12px var(--shadow-color); }
+.btn-outline { background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); padding: calc(0.75rem - 2px) calc(1.5rem - 2px); }
+.btn-outline:hover:not(:disabled) { background-color: var(--primary-color); color: white; transform: translateY(-2px); box-shadow: 0 4px 8px var(--shadow-color); }
+.theme-toggle { position: fixed; bottom: 2rem; right: 2rem; width: 3rem; height: 3rem; border-radius: 50%; background-color: var(--primary-color); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: var(--transition), transform 0.2s ease; overflow: hidden; }
+.theme-toggle:hover { transform: scale(1.1); background-color: var(--primary-dark); }
+.theme-toggle:active { transform: scale(1.0); }
+.theme-toggle i { position: absolute; transition: opacity 0.3s ease, transform 0.3s ease; font-size: 1.25rem; }
+.theme-toggle .fa-sun { opacity: 0; transform: translateY(100%); }
+.theme-toggle .fa-moon { opacity: 1; transform: translateY(0); }
+[data-theme="light"] .theme-toggle .fa-sun { opacity: 1; transform: translateY(0); }
+[data-theme="light"] .theme-toggle .fa-moon { opacity: 0; transform: translateY(-100%); }
+.navbar { background-color: var(--bg-color); box-shadow: 0 2px 4px var(--shadow-color); position: sticky; top: 0; z-index: 999; padding: 1rem 0; transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+.navbar .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+.logo:hover { color: var(--primary-dark); text-decoration: none; }
+.logo-icon { font-size: 1.75rem; color: var(--primary-color); transition: transform 0.3s ease; }
+.logo:hover .logo-icon { transform: rotate(15deg); }
+.nav-links { display: flex; list-style: none; gap: 2rem; }
+.nav-links a { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; position: relative; padding: 0.5rem 0; color: var(--text-light); }
+.nav-links a:hover, .nav-links a.active, .nav-links a[aria-current="page"] { color: var(--primary-color); text-decoration: none; }
+.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--primary-color); transition: width 0.3s ease; }
+.nav-links a:hover::after, .nav-links a.active::after, .nav-links a[aria-current="page"]::after { width: 100%; }
+.menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 1001; color: var(--text-color); }
+.menu-toggle .hamburger { display: block; width: 24px; height: 2px; background-color: currentColor; position: relative; transition: background-color 0.1s 0.2s ease-out; }
+.menu-toggle .hamburger::before, .menu-toggle .hamburger::after { content: ''; position: absolute; left: 0; width: 24px; height: 2px; background-color: currentColor; transition: transform 0.3s ease-out, top 0.3s 0.3s ease-out; }
+.menu-toggle .hamburger::before { top: -7px; }
+.menu-toggle .hamburger::after { top: 7px; }
+
+/* Ad Containers (From Template, refined for blog post context) */
+.ad-container {
+     background-color: var(--bg-secondary);
+     padding: 1rem 0;
+     text-align: center;
+     transition: background-color 0.3s ease;
+     border-top: 1px solid var(--border-color);
+     border-bottom: 1px solid var(--border-color);
+     margin: 2rem 0; /* Default margin */
+ }
+.ad-container.ad-container-post {
+    margin: 3rem auto; /* Center ads within post content area */
+    max-width: 728px; /* Typical ad width */
+    background-color: transparent; /* Blend with post background */
+    border: none; /* No borders for inline ads */
+    padding: 0;
+ }
+.ad-container .container { /* Only applies to non-post ads if used */
+    min-height: 90px; display: flex; align-items: center; justify-content: center; flex-direction: column;
+}
+.ad-placeholder-text { color: var(--text-light); display: block; margin-top: 5px; font-size: 0.75rem; }
+
+/* Related Posts Grid & Card Styling (From Template) */
+.posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 2rem; margin-top: 2rem; }
+.post-card { background: var(--card-bg); border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 6px var(--shadow-color); border: 1px solid var(--border-color); display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; } /* Added base transition */
+/* Animation class target for related posts */
+.post-card.animate-on-scroll { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.post-card.is-visible { opacity: 1; transform: translateY(0); }
+.post-card:hover { transform: translateY(-5px) !important; /* Ensure hover overrides animation transform */ box-shadow: 0 10px 20px -5px var(--shadow-color); }
+.post-image { height: 180px; overflow: hidden; }
+.post-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; border-radius: 0; /* Image inside card doesn't need radius */}
+.post-card:hover .post-image img { transform: scale(1.05); }
+.post-content { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; }
+.post-content h3 { font-size: 1.1rem; margin: 0.5rem 0 0.75rem; line-height: 1.4; }
+.post-content h3 a { color: var(--text-heading); }
+.post-content h3 a:hover { color: var(--primary-color); text-decoration: underline; }
+.post-content p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 0; flex-grow: 1; } /* Let paragraph grow */
+.post-meta { font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem; }
+.post-category { color: var(--primary-color); font-weight: 600; }
+
+/* Footer (From Template) */
+.footer { background-color: var(--footer-bg); color: var(--footer-text); padding: 5rem 0 0; transition: background-color 0.3s ease, color 0.3s ease; margin-top: 4rem; }
+.footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 3rem; margin-bottom: 4rem; }
+.footer-section { margin-bottom: 1.5rem; }
+.footer-section h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 1.5rem; position: relative; display: inline-block; color: white; padding-bottom: 0.5rem; }
+.footer-section h3::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 3px; background-color: var(--primary-color); border-radius: 1px; }
+.footer-section p { color: var(--text-light); margin-bottom: 1.5rem; line-height: 1.7; }
+.footer-section ul { list-style: none; padding-left: 0; /* Reset padding */}
+.footer-section ul li { margin-bottom: 0.875rem; }
+.footer-section ul li a, .footer-section ul li { color: var(--text-light); transition: var(--transition); display: flex; align-items: center; gap: 0.6rem; font-size: 0.9375rem; }
+.footer-section ul li i { font-size: 0.8em; color: var(--primary-color); width: 1.2em; text-align: center; flex-shrink: 0; }
+.footer-section ul li a:hover { color: white; transform: translateX(5px); text-decoration: none; }
+.footer-section ul li a:hover i { color: var(--secondary-color); }
+.footer-logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.375rem; font-weight: 700; color: white; margin-bottom: 1.25rem; }
+.footer-logo:hover { text-decoration: none; }
+.footer-logo .logo-icon { color: var(--primary-color); }
+.social-links { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.social-links a { display: flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; background-color: rgba(255, 255, 255, 0.08); color: var(--text-light); transition: var(--transition), transform 0.2s ease; font-size: 1.1rem; }
+.social-links a:hover { background-color: var(--primary-color); color: white; transform: translateY(-4px) scale(1.05); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); text-decoration: none; }
+.footer-bottom { text-align: center; padding: 2rem 0; border-top: 1px solid var(--border-color); color: var(--text-light); font-size: 0.875rem; display: flex; flex-direction: column; gap: 1rem; }
+.footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+.footer-links a { color: var(--text-light); transition: var(--transition); }
+.footer-links a:hover { color: white; text-decoration: underline; }
+
+/* === Blog Post Specific Styles (Structure from Template, details merged) === */
+.blog-container { padding-top: 3rem; padding-bottom: 3rem; }
+.blog-post {
+    max-width: 800px; /* Reading width */
+    margin: 0 auto;
+    background-color: var(--card-bg); /* Use card background */
+    padding: 2rem 3rem; /* More padding */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+.blog-post-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+.blog-post-header h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    margin-bottom: 1rem;
+    color: var(--text-heading);
+    line-height: 1.2;
+}
+.blog-post-meta {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+.blog-post-meta .separator { opacity: 0.5; }
+
+.cover-image {
+    margin: 0 auto 2.5rem auto; /* Center cover image */
+    border-radius: 8px; /* Match post card radius */
+    overflow: hidden;
+    border: 1px solid var(--border-color); /* Add subtle border */
+}
+.cover-image img {
+    border-radius: 7px 7px 0 0; /* Radius only on top corners */
+    display: block;
+    width: 100%;
+}
+.cover-image figcaption {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 0; /* Remove top margin */
+    padding: 0.75rem 1rem;
+    font-style: italic;
+    background-color: var(--bg-secondary); /* Background for caption */
+    border-top: 1px solid var(--border-color);
+}
+
+/* === Blog Post Content Styling (Merging specific styles from blog1.css) === */
+.blog-post-content {
+    /* font-family: var(--font-serif); */ /* Optional: Use serif for post body */
+    font-size: 1.05rem; /* Slightly smaller than template's 1.1rem */
+    color: var(--text-color);
+    line-height: 1.7; /* Consistent line height */
+}
+.blog-post-content h2, .blog-post-content h3, .blog-post-content h4 {
+    font-family: var(--font-sans); /* Headings back to sans-serif */
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-heading);
+}
+.blog-post-content h2 { font-size: 1.8rem; }
+.blog-post-content h3 { font-size: 1.4rem; margin-top: 2rem; font-weight: 600; }
+.blog-post-content h4 { font-size: 1.2em; margin-top: 1.5rem; font-weight: 600; }
+
+.blog-post-content p, .blog-post-content ul, .blog-post-content ol {
+    margin-bottom: 1.25rem;
+}
+.blog-post-content a {
+    text-decoration: underline;
+    font-weight: 500; /* Make links slightly bolder */
+    color: var(--link-color);
+}
+.blog-post-content a:hover {
+    color: var(--link-hover-color);
+}
+.blog-post-content strong {
+    color: var(--text-heading); /* Make strong text brighter */
+    font-weight: 600;
+}
+
+.blog-post-content ul, .blog-post-content ol {
+    margin-left: 0.5rem; /* Keep slight indent */
+    padding-left: 1.8rem; /* Ensure enough space for markers */
+}
+.blog-post-content li::marker {
+    color: var(--primary-color); /* Style list bullets/numbers */
+}
+/* Specific styling for ULs with icons (from original blog1) */
+.blog-post-content ul li i.fa-fw {
+    margin-right: 0.5em;
+    width: 1.2em;
+    text-align: center;
+}
+
+/* Specific Blockquote styling (from original blog1.css - includes icons) */
+.blog-post-content blockquote {
+    position: relative;
+    padding-left: 3rem; /* Increased padding for icon */
+    margin: 1.5rem 0 2rem 0;
+    border-left: 4px solid var(--blockquote-border);
+    background-color: var(--bg-secondary);
+    color: var(--text-light);
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+}
+.blog-post-content blockquote i.fa-quote-left,
+.blog-post-content blockquote i.fa-lightbulb {
+    position: absolute;
+    left: 1rem;
+    top: 1rem; /* Adjust as needed */
+    color: var(--primary-color);
+    opacity: 0.6;
+    font-size: 1.2em;
+    line-height: 1; /* Prevent icon affecting line height */
+}
+.blog-post-content blockquote i.fa-lightbulb { color: var(--accent-color); }
+.blog-post-content blockquote p {
+    margin-bottom: 0.5rem;
+    font-style: normal; /* Override base italic style if needed for content */
+    /* margin-left: 1.5rem; */ /* Optional: Add margin if icon overlaps text */
+}
+.blog-post-content blockquote footer {
+     /* Inherits from base blockquote styles */
+}
+
+/* Inline Image Styling (from original blog1.css) */
+.blog-post-content figure.inline-image {
+     display: block;
+     margin: 1.5rem 0 2rem 0;
+     border-radius: 8px;
+     overflow: hidden;
+     border: 1px solid var(--border-color);
+     background-color: var(--bg-secondary); /* Background for container */
+     box-sizing: border-box;
+}
+.blog-post-content figure.inline-image img {
+     display: block;
+     width: 100%; /* Force image to fill figure width */
+     height: auto; /* Maintain aspect ratio */
+     max-width: 100%; /* Ensure responsiveness */
+     border-radius: 7px 7px 0 0; /* Match cover image style */
+     box-sizing: border-box;
+     border-bottom: 1px solid var(--border-color); /* Separate img from caption */
+}
+.blog-post-content figure.inline-image figcaption {
+     font-size: 0.85em;
+     color: var(--text-light);
+     text-align: center;
+     padding: 0.75rem 1rem;
+     box-sizing: border-box;
+     font-style: italic;
+     /* background-color: var(--bg-secondary); /* Figure has bg now */
+     /* border-top: 1px solid var(--border-color); /* Img has border-bottom now */
+}
+
+/* Code Block Styling (From Template) */
+.blog-post-content pre {
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    padding: 1.5rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 2rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    line-height: 1.6;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    white-space: pre;
+}
+.blog-post-content code { /* Inline code */
+    font-family: var(--font-mono);
+    font-size: 0.90em; /* Slightly smaller than pre */
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+    /* Prevent inline code from breaking */
+    word-wrap: break-word;
+    white-space: normal;
+}
+.blog-post-content pre code { /* Code inside pre blocks */
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    font-size: 1em; /* Inherit from pre */
+    color: inherit;
+    white-space: inherit; /* Let pre handle whitespace */
+}
+/* Add horizontal rule styling */
+.blog-post-content hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2.5rem 0;
+}
+
+/* TOC Styling (from original blog1.css) */
+.toc {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0 3rem 0;
+    border-radius: 6px;
+    border-left: 5px solid var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.toc h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2em;
+    color: var(--text-heading);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    display: flex; /* Align icon and text */
+    align-items: center;
+    gap: 0.5rem;
+}
+.toc h4 i { font-size: 1em; color: var(--primary-color); }
+.toc ul { list-style: none; padding-left: 0; margin-bottom: 0; }
+.toc ul li { margin-bottom: 0.5rem; }
+.toc ul li a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: color 0.2s ease; }
+.toc ul li a:hover { color: var(--primary-color); text-decoration: underline; }
+.toc ul ul { padding-left: 1.5rem; margin-top: 0.5rem; } /* Nested list */
+.toc ul ul li { font-size: 0.95em; }
+
+/* CTA Section Styling (from original blog1.css) */
+.cta-section {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    margin-top: 3rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+.cta-section h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.cta-section h3 i { font-size: 1em; }
+.cta-section p { color: var(--text-light); }
+.cta-section p:last-child { margin-bottom: 0; }
+.cta-section strong { color: var(--text-heading); }
+.cta-section a { color: var(--primary-color); font-weight: 600; }
+.cta-section a:hover { color: var(--primary-dark); }
+
+
+/* Share Buttons (From Template, slightly adjusted) */
+.share-buttons {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Slightly increased gap */
+    flex-wrap: wrap;
+}
+.share-buttons span {
+    font-weight: 600;
+    color: var(--text-light);
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+.share-buttons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem; height: 2.5rem;
+    border-radius: 50%;
+    background-color: var(--bg-secondary);
+    color: var(--text-light);
+    font-size: 1.1rem;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    text-decoration: none; /* Remove underline */
+}
+.share-buttons a:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+    text-decoration: none;
+    border-color: var(--primary-color);
+}
+
+/* Related Posts & Comments Sections Wrapper (From Template) */
+.related-posts, .comments-section {
+    max-width: 1100px; /* Wider than blog post for grid layout */
+    margin: 4rem auto 0 auto;
+    padding: 0 1rem; /* Padding for smaller screens */
+}
+.related-posts h2, .comments-section h2 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    /* Centering trick */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.comment-placeholder {
+    background-color: var(--card-bg); /* Use card bg */
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    color: var(--text-light);
+    border: 1px dashed var(--border-color);
+    margin-top: 2rem; /* Ensure space from heading */
+}
+.comment-placeholder p { margin-bottom: 0.5rem; }
+.comment-placeholder a { color: var(--primary-color); }
+
+/* Scroll to Top Button (From Template) */
+.scroll-to-top { position: fixed; bottom: 6rem; right: 2rem; width: 3rem; height: 3rem; border-radius: 50%; background-color: var(--secondary-color); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 998; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; }
+.scroll-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.scroll-to-top:hover { background-color: var(--secondary-dark); transform: scale(1.1); }
+.scroll-to-top i { font-size: 1.2rem; }
+
+/* === Animations (Using Class - From Template) === */
+.animate-on-scroll {
+    /* opacity: 0; */
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform; /* Hint to browser for optimization */
+}
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* === Responsive Styles (From Template, slightly adjusted for blog context) === */
+@media (max-width: 1024px) {
+    .blog-post { padding: 1.5rem 2rem; }
+}
+@media (max-width: 768px) {
+    html { scroll-padding-top: 70px; } /* Adjust for mobile nav */
+    .menu-toggle { display: block; }
+    .nav-links { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--bg-secondary); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; opacity: 0; visibility: hidden; transform: translateY(-20px); transition: opacity 0.4s ease, visibility 0s 0.4s linear, transform 0.4s ease; z-index: 1000; }
+    .nav-links.active { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+    .nav-links.active li { opacity: 0; animation: fadeIn 0.5s ease forwards; /* Basic fade-in for links */ }
+    .nav-links.active li:nth-child(1) { animation-delay: 0.2s; }
+    .nav-links.active li:nth-child(2) { animation-delay: 0.3s; }
+    .nav-links.active li:nth-child(3) { animation-delay: 0.4s; }
+    .nav-links.active li:nth-child(4) { animation-delay: 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } /* Define fadeIn used above */
+    .menu-toggle.active .hamburger { background-color: transparent; transition: background-color 0.1s ease-out; }
+    .menu-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; transition: top 0.3s ease-out, transform 0.3s 0.3s ease-out; }
+    .menu-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; transition: top 0.3s ease-out, transform 0.3s 0.3s ease-out; }
+
+    .blog-post { padding: 1.5rem; }
+    .blog-post-header h1 { font-size: 1.8rem; }
+    .blog-post-content { font-size: 1rem; } /* Slightly smaller on mobile */
+    .blog-post-content h2 { font-size: 1.5rem; }
+    .blog-post-content h3 { font-size: 1.2rem; }
+    .blog-post-content pre { font-size: 0.9em; } /* Smaller code blocks */
+
+    .footer-content { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); } /* Keep auto-fit */
+    .posts-grid { gap: 1.5rem; } /* Smaller gap for related posts */
+    .related-posts, .comments-section { padding: 0; } /* Remove side padding on mobile */
+}
+@media (max-width: 480px) {
+    body { font-size: 15px; }
+    .container { padding: 0 1rem; }
+    .blog-post { padding: 1rem; border-radius: 4px;}
+    .blog-post-header h1 { font-size: 1.6rem; }
+    .blog-post-meta { font-size: 0.8rem; }
+    .blog-post-content { font-size: 0.95rem; }
+    .blog-post-content pre { padding: 1rem; font-size: 0.85em;}
+    .toc { padding: 1rem 1.5rem; } /* Smaller TOC padding */
+    .cta-section { padding: 1.5rem; } /* Smaller CTA padding */
+
+    .share-buttons { gap: 0.5rem; justify-content: center; /* Center buttons */ }
+    .share-buttons span { display: block; width: 100%; margin-bottom: 0.5rem; text-align: center;}
+    .share-buttons a { width: 2.2rem; height: 2.2rem; font-size: 1rem;}
+
+    .related-posts, .comments-section { margin-top: 3rem; }
+    .related-posts h2, .comments-section h2 { font-size: 1.4rem; margin-bottom: 2rem;}
+
+    /* Footer stacking from template */
+    .footer-content { grid-template-columns: 1fr; text-align: center; }
+    .footer-section h3::after { left: 50%; transform: translateX(-50%); }
+    .footer-section ul { padding-left: 0; }
+    .footer-section ul li { justify-content: center; }
+    .footer-section ul li a { justify-content: center; }
+    .social-links { justify-content: center; }
+    .footer-bottom { padding: 1.5rem 0; flex-direction: column; gap: 1rem; }
+    .footer-links { gap: 1rem; font-size: 0.8125rem; }
+
+    .theme-toggle { width: 2.75rem; height: 2.75rem; bottom: 1rem; right: 1rem; }
+    .scroll-to-top { width: 2.75rem; height: 2.75rem; bottom: 4.75rem; right: 1rem; } /* Adjust position relative to theme toggle */
+}
